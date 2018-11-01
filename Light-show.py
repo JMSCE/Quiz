@@ -34,7 +34,8 @@ def red_light():
 def light_display():
 	light_list = [green_light, blue_light, yellow_light, red_light]
 	random.shuffle(light_list)
-	for x in range (0,5)
+	for light_function in light_list:
+		light_function()
 
 light_display()
 
