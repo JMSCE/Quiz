@@ -1,3 +1,5 @@
+#doesnt include full code. Just parts to insert.
+
 import random
 from random import shuffle
 GPIO.setup(18,GPIO.OUT)
