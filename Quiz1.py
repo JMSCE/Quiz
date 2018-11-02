@@ -1,22 +1,31 @@
 import RPi.GPIO as GPIO
 import time
+import random
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(18,GPIO.OUT)
-GPIO.setup(17,GPIO.OUT)
-GPIO.setup(23,GPIO.OUT)
+GPIO.setup(18,GPIO.OUT)#red
+GPIO.setup(17,GPIO.OUT)#green
+GPIO.setup(23,GPIO.OUT)#buzzer
+GPIO.output(23,GPIO.HIGH)#buzzer off
+GPIO.setup(12,GPIO.OUT)#blue
+GPIO.setup(16,GPIO.OUT)#yellow
+GPIO.setup(26,GPIO.OUT)#white
 
 def correct_answer_sound():
   GPIO.output(17, GPIO.HIGH)
   time.sleep(2)
   GPIO.output(17,GPIO.LOW)
 
+def incorrect_answer_sound():
+  GPIO.output(18,GPIO.HIGH)
+  GPIO.output(23,GPIO.LOW)
+  time.sleep(2)
+  GPIO.output(18,GPIO.LOW)
+  GPIO.output(23,GPIO.HIGH)
+
 def good_news():
   for x in range (0,3):
-    GPIO.output(17, GPIO.HIGH)
-     time.sleep(0.5)
-     GPIO.output(17,GPIO.LOW)
-     time.sleep(0.5)
+    light_display()
 
 def bad_news():
   GPIO.output(18,GPIO.HIGH)
@@ -24,6 +33,42 @@ def bad_news():
   time.sleep(6)
   GPIO.output(18,GPIO.LOW)
   GPIO.output(23,GPIO.HIGH)
+
+def green_light():
+    GPIO.output(17,GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(17,GPIO.LOW)
+    time.sleep(1)
+
+def red_light():
+    GPIO.output(18,GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(18,GPIO.LOW)
+    time.sleep(1)
+
+def blue_light():
+    GPIO.output(12,GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(12,GPIO.LOW)
+    time.sleep(1)
+
+def yellow_light():
+    GPIO.output(16,GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(16,GPIO.LOW)
+    time.sleep(1)
+
+def white_light():
+    GPIO.output(26,GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(26,GPIO.LOW)
+    time.sleep(1)
+
+def light_display():
+  light_list = [green_light, blue_light, yellow_light, red_light, white_light]
+  random.shuffle(light_list)
+  for light_function in light_list:
+    light_function()
 
 total_score = 0
 name = input("Please enter your name")
@@ -79,18 +124,18 @@ else:
 input("For the next question, hit enter.")
 #question 4
 print("\n")
-print("When did women get the right to vote on the same terms as men?")
-print("a. 1906")
-print("b. 1912")
-print("c. 1918")
-print("d. 1928")
+print("In what warwas Florence Nightingale a nurse?")
+print("a. Napoleonic")
+print("b. Crimean")
+print("c. First World War")
+print("d. War of 1812")
 answer = input ("Is it a, b, c or d?")
-if answer == "d":
+if answer == "b":
   print ("Congratulations. You are correct.")
   total_score = total_score + 1
   correct_answer_sound()
 else:
-  print ("Incorrect. The correct answer is 1928. Women first got the right to vote in 1918 but it wasn't until 1928 that it was on the same terms as men (over 21)")
+  print ("Incorrect. The correct answer is the Crimean war")
   incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 5
@@ -127,18 +172,18 @@ else:
 input("For the next question, hit enter.")
 #question 7
 print("\n")
-print("What is the UK's second largest city?")
-print("a. Manchester")
-print("b. Liverpool.")
-print("c. Birmingham.")
-print("d. Glasgow.")
+print("What construction was Isambard Brunel most famous for?")
+print("a. The London Underground")
+print("b. Great Western Railway.")
+print("c. Iron Bridge.")
+print("d. Tower Bridge.")
 answer = input ("Is it a, b, c or d?")
-if answer == "c":
+if answer == "b":
   print ("Congratulations. You are correct.")
   total_score = total_score + 1
   correct_answer_sound()
 else:
-  print("Incorrect. Birmingham is the UK's second largest city.")
+  print("Incorrect. Brunel was most famous for the Great Western Railway")
   incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 8
@@ -175,16 +220,16 @@ else:
 input("For the next question, hit enter.")
 #question 10
 print("\n")
-print("True or false, Elizabeth I was the first Queen of England?")
-print("a.True.")
-print("b.False.")
+print("Is the UK's constitution codified or uncodified.")
+print("a.Codified.")
+print("b.Uncodified.")
 answer = input ("Is it a or b?")
 if answer == "b":
   print("Congratulations. You are correct.")
   total_score = total_score + 1
   correct_answer_sound()
 else:
-  print ("Incorrect. The first Queen of England was Mary I.")
+  print ("Incorrect. The UK's constitution is uncodified, meaning it is not written down as one document.")
   incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 11
@@ -203,18 +248,18 @@ else:
 input("For the next question, hit enter.")
 #question 12
 print("\n")
-print("When was the Scottish Parliament formed?")
-print("a. 1881.")
-print("b. 1987")
-print("c. 1992")
-print("d. 1999.")
+print("In what year did the island of Ireland become two countries?")
+print("a. 1918.")
+print("b. 1921")
+print("c. 1922")
+print("d. 1932.")
 answer = input ("Is it a, b, c or d?")
-if answer == "d":
+if answer == "c":
   print("Congratulations. You are correct.")
   total_score = total_score + 1
   correct_answer_sound()
 else:
-  print("Incorrect. The correct answer is 1999.")
+  print("Incorrect. The correct answer is 1922.")
   incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 13
@@ -279,8 +324,7 @@ if answer == "b":
   correct_answer_sound()
 else:
   print("Incorrect. The correct answer is Henry VIII.")
-  incorrect_answer_sound())
-input("For the next question, hit enter.")
+  incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 17
 print("\n")
@@ -312,7 +356,7 @@ if answer == "c":
   correct_answer_sound()
 else:
   print("Incorrect. The correct answer is running.")
-  incorrect_answer_sound())
+  incorrect_answer_sound()
 input("For the next question, hit enter.")
 #question 19
 print("\n")
@@ -322,7 +366,7 @@ print("b. David")
 print("c. Jacob")
 print("d. John")
 answer = input ("Is it a, b, c or d?")
-if answer == "d":
+if answer == "b":
   print("Congratulations. You are correct.")
   total_score = total_score + 1
   correct_answer_sound()
@@ -346,9 +390,86 @@ else:
   print("Incorrect. The correct answer is 1966.")
   incorrect_answer_sound()
 input("For the next question, hit enter.")
-#########################
+#question 21
 print("\n")
-final_score = int(total_score/20*100)
+print("When did women get the right to vote on the same terms as men?")
+print("a. 1906")
+print("b. 1912")
+print("c. 1918")
+print("d. 1928")
+answer = input ("Is it a, b, c or d?")
+if answer == "d":
+  print ("Congratulations. You are correct.")
+  total_score = total_score + 1
+  correct_answer_sound()
+else:
+  print ("Incorrect. The correct answer is 1928. Women first got the right to vote in 1918 but it wasn't until 1928 that it was on the same terms as men (over 21)")
+  incorrect_answer_sound()
+input("For the next question, hit enter.")
+#question 22
+print("\n")
+print("What is the UK's second largest city?")
+print("a. Manchester")
+print("b. Liverpool.")
+print("c. Birmingham.")
+print("d. Glasgow.")
+answer = input ("Is it a, b, c or d?")
+if answer == "c":
+  print ("Congratulations. You are correct.")
+  total_score = total_score + 1
+  correct_answer_sound()
+else:
+  print("Incorrect. Birmingham is the UK's second largest city.")
+  incorrect_answer_sound()
+input("For the next question, hit enter.")
+#question 23
+print("\n")
+print("True or false, Elizabeth I was the first Queen of England?")
+print("a.True.")
+print("b.False.")
+answer = input ("Is it a or b?")
+if answer == "b":
+  print("Congratulations. You are correct.")
+  total_score = total_score + 1
+  correct_answer_sound()
+else:
+  print ("Incorrect. The first Queen of England was Mary I.")
+  incorrect_answer_sound()
+input("For the next question, hit enter.")
+#question 24
+print("\n")
+print("When was the Scottish Parliament formed?")
+print("a. 1881.")
+print("b. 1987")
+print("c. 1992")
+print("d. 1999.")
+answer = input ("Is it a, b, c or d?")
+if answer == "d":
+  print("Congratulations. You are correct.")
+  total_score = total_score + 1
+  correct_answer_sound()
+else:
+  print("Incorrect. The correct answer is 1999.")
+  incorrect_answer_sound()
+input("For the next question, hit enter.")
+#question 25
+print("\n")
+print("Which one of these is not a British sports star?")
+print("a. Steve Redgrave.")
+print("b. Barry Wiggins")
+print("c. Andy Murray")
+print("d. Jessica Ennis.")
+answer = input ("Is it a, b, c or d?")
+if answer == "b":
+  print("Congratulations. You are correct.")
+  total_score = total_score + 1
+  correct_answer_sound()
+else:
+  print("Hahahahaha. The answer is Barry Wiggins. His name is actually Bradley Wiggins. Tough luck!")
+  incorrect_answer_sound()
+input("For the next question, hit enter.")
+print("\n")
+final_score = int(total_score/25*100)
 print("You scored " + str(final_score) + "%")
 if final_score >= 75 :
   print("Well done " + name + ". With this score you would pass the British Citizenship test.")
